@@ -1,0 +1,23 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  template:
+    metadata:
+      name: product-service-v1
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.secretName }}
+      containers:
+      - name: product
+        image: iad.ocir.io/idmaqhrbiuyo/product:v0.3
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu:  {{ .Values.limitCPU }}
+            memory:  {{ .Values.limitMemory }}
+          requests:
+            cpu:  {{ .Values.requestCPU }}
+            memory:  {{ .Values.requestMemory }}

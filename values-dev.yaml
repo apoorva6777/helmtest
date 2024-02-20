@@ -1,0 +1,8 @@
+namespace: test
+
+secretName: ocirsecret
+
+limitCPU: "256m"
+limitMemory: "512Mi"
+requestCPU: "256m"
+requestMemory: "512Mi"

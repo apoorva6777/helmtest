@@ -1,0 +1,30 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: details-service
+spec:
+  template:
+    metadata:
+      name: details-service-v1
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.secretName }}
+      containers:
+      - name: details
+        image: iad.ocir.io/idmaqhrbiuyo/details:v0.1
+        ports:
+        - containerPort: 3001
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3001
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          successThreshold: 2   
+        resources:
+          limits:
+            cpu:  {{ .Values.limitCPU }}
+            memory:  {{ .Values.limitMemory }}
+          requests:
+            cpu:  {{ .Values.requestCPU }}
+            memory:  {{ .Values.requestMemory }}
